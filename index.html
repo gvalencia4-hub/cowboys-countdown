@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>COWBOY TIME!!!</title>
+    <style>
+                  :root {
+                    --bg: #162b6f;
+                    --card: #152780;
+                    --accent: #7aa2ff;
+                    --text: #e6e9f5;
+                    --muted: #9aa3bd;
+                  }
+                  * {
+                    box-sizing: border-box;
+                  }
+                  body {
+                    margin: 0;
+                    font-family: system-ui, -apple-system, Segoe UI, Roboto,
+                      "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji",
+                      "Segoe UI Emoji";
+                    background: radial-gradient(
+                      1000px 600px at 50% -20%,
+                      #1a2252,
+                      #8b8e98 60%
+                    );
+                    color: var(--text);
+                    min-height: 100svh;
+                    display: grid;
+                    place-items: center;
+                    padding: 24px;
+                  }
+                  .wrap {
+                    width: 100%;
+                    max-width: 850px;
+                  }
+                  .card {
+                    background: linear-gradient(
+                      180deg,
+                      rgba(231, 221, 221, 0.981),
+                      rgba(255, 255, 255, 0.02)
+                    );
+                    border: 1px solid rgba(255, 255, 255, 0.08);
+                    border-radius: 20px;
+                    padding: 28px;
+                    /* Title row (wraps your H1) */
+                    .brand {
+                      position: relative; /* allows ::before behind the text */
+                      display: flex;
+                      justify-content: center;
+                      align-items: center;
+                      margin: 0 0 8px;
+                      padding: 20px 0; /* space for the star */
+                    }
+                    .brand h1{ position: relative; z-index: 1; }
+
+          /* DEBUG: make the star definitely visible behind the title */
+
+      }
+
+            tate(210deg); /* push toward Cowboys blue */
+                    }
+
+                    /* Ensure the H1 sits above the star */
+                    .brand h1 {
+                      position: relative;
+                      z-index: 1;
+                    }
+
+                    /* fallback if mask isn't supported */
+                    @supports not (-webkit-mask: url("")) {
+                      .card::before {
+                        background: url("img/cowboy-star.svg") no-repeat center;
+                        background-size: 560px auto;
+                        opacity: 0.3;
+                        filter: saturate(1.2);
+                      }
+                    }
+
+                    backdrop-filter: blur(6px);
+                  }
+                  h1 {
+                    margin: 0 0 8px;
+                    font-size: clamp(24px, 4vw, 38px);
+                    letter-spacing: 0.4px;
+                  }
+                  .subtitle {
+                    color: var(--muted);
+                    margin: 0 0 18px;
+                    font-size: 14px;
+                  }
+                  .event-when {
+                    color: var(--text);
+                    font-weight: 600;
+                    margin: 10px 0 22px;
+                  }
+
+                  .grid {
+                    display: grid;
+                    grid-template-columns: repeat(4, minmax(0, 1fr));
+                    gap: 14px;
+                  }
+                  .tile {
+                    background: var(--card);
+                    border: 1px solid rgba(255, 255, 255, 0.08);
+                    border-radius: 16px;
+                    padding: 18px;
+                    text-align: center;
+                  }
+                  .num {
+                    font-variant-numeric: tabular-nums;
+                    font-size: clamp(28px, 6vw, 54px);
+                    font-weight: 800;
+                  }
+                  .lbl {
+                    text-transform: uppercase;
+                    letter-spacing: 0.14em;
+                    font-size: 11px;
+                    color: var(--muted);
+                    margin-top: 6px;
+                  }
+
+                  .controls {
+                    display: flex;
+                    flex-wrap: wrap;
+                    gap: 8px;
+                    margin-top: 20px;
+                  }
+                  .btn,
+                  .input {
+                    border-radius: 12px;
+                    border: 1px solid rgba(255, 255, 255, 0.1);
+                    background: #0e1533;
+                    color: var(--text);
+                    padding: 10px 14px;
+                    font: inherit;
+                    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+                  }
+                  .btn {
+                    cursor: pointer;
+                  }
+                  .btn.primary {
+                    background: #1a2360;
+                    border-color: #3b4fb3;
+                  }
+                  .info {
+                    margin-top: 14px;
+                    font-size: 13px;
+                    color: var(--muted);
+                  }
+                  .live {
+                    color: #58ffa1;
+                    font-weight: 700;
+                  }
+                  .footer {
+                    text-align: center;
+                    margin-top: 18px;
+                    font-size: 12px;
+                    color: var(--muted);
+                  }
+                  a {
+                    color: var(--accent);
+                    text-decoration: none;
+                  }
+
+                  @media (max-width: 560px) {
+                    .grid {
+                      grid-template-columns: repeat(2, 1fr);
+                    }
+                  }
+    </style>
+  </head>
+  <body>
+    <main class="wrap">
+      <section class="card">
+        <div class="brand">
+          <img
+            class="star"
+            src="img/cowboy-star.svg"
+            alt=""
+            aria-hidden="true"
+          />
+          <h1 id="event-title">Countdown</h1>
+        </div>
+
+        <p class="subtitle"></p>
+        <div class="event-when" id="event-when"></div>
+
+        <div class="grid" aria-live="polite">
+          <div class="tile">
+            <div class="num" id="days">0</div>
+            <div class="lbl">Days</div>
+          </div>
+          <div class="tile">
+            <div class="num" id="hours">0</div>
+            <div class="lbl">Hours</div>
+          </div>
+          <div class="tile">
+            <div class="num" id="mins">0</div>
+            <div class="lbl">Minutes</div>
+          </div>
+          <div class="tile">
+            <div class="num" id="secs">0</div>
+            <div class="lbl">Seconds</div>
+          </div>
+        </div>
+
+        <div class="controls">
+          <input class="input" id="when-input" type="datetime-local" />
+          <button class="btn primary" id="update">Set time</button>
+          <a class="btn" id="share" href="#" target="_blank" rel="noopener"
+            >Shareable link</a
+          >
+          <a class="btn" id="ics" href="#">Add to Calendar (.ics)</a>
+        </div>
+        <div class="info" id="status"></div>
+        <div class="footer">
+          Tip: use ISO time in the URL, e.g.
+          <code>?title=Concert&time=2025-12-31T20:00:00-08:00</code>
+        </div>
+      </section>
+    </main>
+
+    <script>
+      (function () {
+        const qs = new URLSearchParams(location.search);
+        const title = (qs.get("title") || "COWBOY COUNTDOWN").replace(
+          /\+/g,
+          " "
+        );
+        const timeParam = qs.get("time");
+        const tz =
+          qs.get("tz") || Intl.DateTimeFormat().resolvedOptions().timeZone;
+
+        const titleEl = document.getElementById("event-title");
+        const whenEl = document.getElementById("event-when");
+        const statusEl = document.getElementById("status");
+        const daysEl = document.getElementById("days");
+        const hoursEl = document.getElementById("hours");
+        const minsEl = document.getElementById("mins");
+        const secsEl = document.getElementById("secs");
+        const shareEl = document.getElementById("share");
+        const icsEl = document.getElementById("ics");
+        const inputEl = document.getElementById("when-input");
+
+        // Default time: Nov 26, 2025 at 1:30 PM Pacific
+        let defaultDate = new Date("2025-11-27T13:30:00-08:00");
+
+        let eventDate = timeParam ? new Date(timeParam) : defaultDate;
+
+        function fmtLong(d) {
+          try {
+            return new Intl.DateTimeFormat(undefined, {
+              dateStyle: "full",
+              timeStyle: "long",
+              timeZone: tz,
+            }).format(d);
+          } catch {
+            return d.toString();
+          }
+        }
+
+        function pad(n) {
+          return String(n).padStart(2, "0");
+        }
+
+        function updateUrl() {
+          const iso = eventDate.toISOString();
+          const url = new URL(location.href);
+          url.searchParams.set("title", title);
+          url.searchParams.set("time", iso);
+          url.searchParams.set("tz", tz);
+          shareEl.href = url.toString();
+          shareEl.textContent = "Shareable link";
+        }
+
+        function toICS(dtStart, dtEnd, summary) {
+          // Convert to UTC in ICS friendly format YYYYMMDDTHHMMSSZ
+          const f = (d) =>
+            d
+              .toISOString()
+              .replace(/[-:]/g, "")
+              .replace(/\.\d{3}Z$/, "Z");
+          const uid = Math.random().toString(36).slice(2) + "@countdown.local";
+          return [
+            "BEGIN:VCALENDAR",
+            "VERSION:2.0",
+            "PRODID:-//Countdown//EN",
+            "BEGIN:VEVENT",
+            "UID:" + uid,
+            "DTSTAMP:" + f(new Date()),
+            "DTSTART:" + f(dtStart),
+            "DTEND:" + f(dtEnd),
+            "SUMMARY:" + summary,
+            "END:VEVENT",
+            "END:VCALENDAR",
+          ].join("\r\n");
+        }
+
+        function refreshMeta() {
+          titleEl.textContent = title;
+          whenEl.textContent =
+            "Event time: " + fmtLong(eventDate) + " (" + tz + ")";
+          const localInput = new Date(
+            eventDate.getTime() - eventDate.getTimezoneOffset() * 60000
+          );
+          inputEl.value = localInput.toISOString().slice(0, 16);
+          updateUrl();
+          const ics = toICS(
+            eventDate,
+            new Date(eventDate.getTime() + 2 * 60 * 60 * 1000),
+            title
+          );
+          const blob = new Blob([ics], { type: "text/calendar" });
+          const href = URL.createObjectURL(blob);
+          icsEl.href = href;
+          icsEl.download = (title.replace(/\s+/g, "_") || "event") + ".ics";
+        }
+
+        function tick() {
+          const now = new Date();
+          const diff = eventDate - now;
+          if (isNaN(diff)) {
+            statusEl.textContent =
+              'Invalid date. Click "Set time" and pick a valid datetime.';
+            return;
+          }
+
+          if (diff <= 0) {
+            daysEl.textContent = "00";
+            hoursEl.textContent = "00";
+            minsEl.textContent = "00";
+            secsEl.textContent = "00";
+            statusEl.innerHTML = '<span class="live">We\'re live! 🎉</span>';
+            return;
+          }
+          const d = Math.floor(diff / (24 * 3600 * 1000));
+          const h = Math.floor((diff % (24 * 3600 * 1000)) / (3600 * 1000));
+          const m = Math.floor((diff % (3600 * 1000)) / (60 * 1000));
+          const s = Math.floor((diff % (60 * 1000)) / 1000);
+
+          daysEl.textContent = String(d).padStart(2, "0");
+          hoursEl.textContent = pad(h);
+          minsEl.textContent = pad(m);
+          secsEl.textContent = pad(s);
+          statusEl.textContent = "";
+        }
+
+        document.getElementById("update").addEventListener("click", () => {
+          const val = inputEl.value;
+          if (!val) return;
+          const picked = new Date(val);
+          if (String(picked) === "Invalid Date") {
+            statusEl.textContent = "Invalid datetime.";
+            return;
+          }
+          eventDate = picked;
+          refreshMeta();
+          tick();
+        });
+
+        refreshMeta();
+        tick();
+        setInterval(tick, 1000);
+      })();
+    </script>
+  </body>
+</html>

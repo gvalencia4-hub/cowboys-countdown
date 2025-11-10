@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" role="img" aria-label="Star">
+  <!-- Outer silver outline -->
+  <polygon points="50,3 61,35 95,35 67,55 78,88 50,68 22,88 33,55 5,35 39,35"
+           fill="#C0C7D1"/>
+  <!-- Navy inner star (double-outline look) -->
+  <polygon points="50,10 60,36 88,36 65,53
