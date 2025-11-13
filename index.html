@@ -188,12 +188,52 @@
     gap: 1rem; /* space between logo and title */
   }
 
-  .star {
-    width: 140px;       /* make the logo nice and big */
-    height: auto;
-    filter: drop-shadow(0 0 8px rgba(0, 0, 0, 0.4));
-    margin-bottom: 0.5rem;
+  /* Cowboys logo – layout */
+.brand {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem; 
+}
+
+/* Glowing + spinning + flickering star */
+.star {
+  width: 160px;
+  height: auto;
+  margin-bottom: 0.5rem;
+  animation: starGlow 2.2s ease-in-out infinite alternate,
+             starSpin 18s linear infinite,
+             starFlicker 0.18s linear infinite;
+  transform-origin: center center;
+}
+
+/* Glow effect */
+@keyframes starGlow {
+  0% {
+    filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.3));
   }
+  100% {
+    filter: drop-shadow(0 0 22px rgba(255, 255, 255, 0.9));
+  }
+}
+
+/* Spin effect */
+@keyframes starSpin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+  }
+/* Stadium light flicker */
+@keyframes starFlicker {
+  0%   { opacity: 1; }
+  15%  { opacity: 0.7; }
+  30%  { opacity: 1; }
+  45%  { opacity: 0.5; }
+  60%  { opacity: 1; }
+  80%  { opacity: 0.85; }
+  100% { opacity: 1; }
+}
 
     </style>
 
