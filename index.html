@@ -4,258 +4,230 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>COWBOY TIME!!!</title>
+
     <style>
-                    :root {
-                      --bg: #162b6f;
-                      --card: #152780;
-                      --accent: #7aa2ff;
-                      --text: #e6e9f5;
-                      --muted: #9aa3bd;
-                    }
-                    * {
-                      box-sizing: border-box;
-                    }
-                    body {
-                      margin: 0;
-                      font-family: system-ui, -apple-system, Segoe UI, Roboto,
-                        "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji",
-                        "Segoe UI Emoji";
-                      background: radial-gradient(
-                        1000px 600px at 50% -20%,
-                        #1a2252,
-                        #9fa1a7 60%
-                      );
-                      color: var(--text);
-                      min-height: 100svh;
-                      display: grid;
-                      place-items: center;
-                      padding: 24px;
-                    }
-                    .wrap {
-                      width: 100%;
-                      max-width: 850px;
-                    }
-                    .card {
-                      background: linear-gradient(
-                        180deg,
-                        rgba(22, 11, 11, 0.981),
-                        rgba(255, 255, 255, 0.02)
-                      );
-                      border: 1px solid rgba(255, 255, 255, 0.08);
-                      border-radius: 20px;
-                      padding: 28px;
-                      /* Title row (wraps your H1) */
-                      .brand {
-                        position: relative; /* allows ::before behind the text */
-                        display: flex;
-                        justify-content: center;
-                        align-items: center;
-                        margin: 0 0 8px;
-                        padding: 20px 0; /* space for the star */
-                      }
-                      .brand h1{ position: relative; z-index: 1; }
-
-            /* DEBUG: make the star definitely visible behind the title */
-
-        }
-
-              tate(210deg); /* push toward Cowboys blue */
-                      }
-
-                      /* Ensure the H1 sits above the star */
-                      .brand h1 {
-                        position: relative;
-                        z-index: 1;
-                      }
-
-                      /* fallback if mask isn't supported */
-                      @supports not (-webkit-mask: url("")) {
-                        .card::before {
-                          background: url("img/cowboy-star.svg") no-repeat center;
-                          background-size: 560px auto;
-                          opacity: 0.3;
-                          filter: saturate(1.2);
-                        }
-                      }
-
-                      backdrop-filter: blur(6px);
-                    }
-                    h1 {
-                      margin: 0 0 8px;
-                      font-size: clamp(24px, 4vw, 38px);
-                      letter-spacing: 0.4px;
-                    }
-                    .subtitle {
-                      color: var(--muted);
-                      margin: 0 0 18px;
-                      font-size: 14px;
-                    }
-                    .event-when {
-                      color: var(--text);
-                      font-weight: 600;
-                      margin: 10px 0 22px;
-                    }
-
-                    .grid {
-                      display: grid;
-                      grid-template-columns: repeat(4, minmax(0, 1fr));
-                      gap: 14px;
-                    }
-                    .tile {
-                      background: var(--card);
-                      border: 1px solid rgba(255, 255, 255, 0.08);
-                      border-radius: 16px;
-                      padding: 18px;
-                      text-align: center;
-                    }
-                    .num {
-                      font-variant-numeric: tabular-nums;
-                      font-size: clamp(28px, 6vw, 54px);
-                      font-weight: 800;
-                    }
-                    .lbl {
-                      text-transform: uppercase;
-                      letter-spacing: 0.14em;
-                      font-size: 11px;
-                      color: var(--muted);
-                      margin-top: 6px;
-                    }
-
-                    .controls {
-                      display: flex;
-                      flex-wrap: wrap;
-                      gap: 8px;
-                      margin-top: 20px;
-                    }
-                    .btn,
-                    .input {
-                      border-radius: 12px;
-                      border: 1px solid rgba(255, 255, 255, 0.1);
-                      background: #0e1533;
-                      color: var(--text);
-                      padding: 10px 14px;
-                      font: inherit;
-                      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
-                    }
-                    .btn {
-                      cursor: pointer;
-                    }
-                    .btn.primary {
-                      background: #1a2360;
-                      border-color: #3b4fb3;
-                    }
-                    .info {
-                      margin-top: 14px;
-                      font-size: 13px;
-                      color: var(--muted);
-                    }
-                    .live {
-                      color: #58ffa1;
-                      font-weight: 700;
-                    }
-                    .footer {
-                      text-align: center;
-                      margin-top: 18px;
-                      font-size: 12px;
-                      color: var(--muted);
-                    }
-                    a {
-                      color: var(--accent);
-                      text-decoration: none;
-                    }
-
-         @media (max-width: 560px) {
-        .grid {
-          grid-template-columns: repeat(2, 1fr);
-        }
+      :root {
+        --bg: #162b6f;
+        --card: #152780;
+        --accent: #7aa2ff;
+        --text: #e6e9f5;
+        --muted: #9aa3bd;
       }
 
-      #event-tagline {
-        margin-top: 0.75rem;
-        margin-bottom: 1.5rem;
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        font-family: system-ui, -apple-system, Segoe UI, Roboto,
+          "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji",
+          "Segoe UI Emoji";
+        background: radial-gradient(
+          circle at top,
+          #4d83ff 0%,
+          #a1a6ba 55%,
+          #1426b1 100%
+        );
+        color: var(--text);
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      main.wrap {
+        width: 100%;
+        padding: 2rem 1rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .card {
+        background: linear-gradient(to bottom, #0b0914, #262b4b);
+        border-radius: 24px;
+        max-width: 960px;
+        width: 100%;
+        padding: 2.5rem 2rem 2.75rem;
+        box-shadow: 0 24px 60px rgba(0, 0, 0, 0.6);
+        border: 1px solid rgba(255, 255, 255, 0.06);
+      }
+
+      .brand {
         text-align: center;
-        font-size: 2.4rem;
-        letter-spacing: 0.12em;
-        text-transform: uppercase;
-        font-weight: 600;
-        color: #e1dee6;
+        margin-bottom: 1.5rem;
       }
-        /* Cowboys logo */
-  .brand {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 1rem; /* space between logo and title */
-  }
 
-  /* Cowboys logo – layout */
-.brand {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 1rem; 
-}
+      .logo-row {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 2rem;
+        margin-bottom: 1.5rem;
+      }
 
-/* Glowing + spinning + flickering star */
-.star {
-  width: 160px;
-  height: auto;
-  margin-bottom: 0.5rem;
-  animation: starGlow 2.2s ease-in-out infinite alternate,
-             starSpin 18s linear infinite,
-             starFlicker 0.18s linear infinite;
-  transform-origin: center center;
-}
+      .side-logo {
+        width: 90px;
+        height: auto;
+        filter: drop-shadow(0 0 6px rgba(0, 0, 0, 0.4));
+        border-radius: 12px;
+      }
 
-/* Glow effect */
-@keyframes starGlow {
-  0% {
-    filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.3));
-  }
-  100% {
-    filter: drop-shadow(0 0 22px rgba(255, 255, 255, 0.9));
-  }
-}
+      .logo-row .star {
+        width: 140px;
+        height: auto;
+        display: inline-block;
+        transform-origin: 50% 50%;
 
-/* Spin effect */
-@keyframes starSpin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-}
+        /* base glow */
+        filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.7));
 
-  }
-/* Stadium light flicker */
-@keyframes starFlicker {
-  0%   { opacity: 1; }
-  15%  { opacity: 0.7; }
-  30%  { opacity: 1; }
-  45%  { opacity: 0.5; }
-  60%  { opacity: 1; }
-  80%  { opacity: 0.85; }
-  100% { opacity: 1; }
-}
+        /* spin + glow pulse */
+        animation: star-spin 4s linear infinite,
+          star-glow 1.8s ease-in-out infinite alternate;
+      }
 
+      @keyframes star-spin {
+        from {
+          transform: rotate(0deg);
+        }
+        to {
+          transform: rotate(360deg);
+        }
+      }
+
+      #event-title {
+        font-size: 1.9rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        margin: 0;
+      }
+
+      .subtitle {
+        text-align: center;
+        margin: 0 0 1.25rem;
+        font-size: 1.2rem;
+        letter-spacing: 0.35em;
+        text-transform: uppercase;
+        color: var(--accent);
+      }
+
+      .event-when {
+        text-align: center;
+        margin-bottom: 2rem;
+        color: var(--muted);
+        font-size: 0.95rem;
+      }
+
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 1rem;
+        margin-bottom: 2rem;
+      }
+
+      .tile {
+        background: rgba(2, 9, 33, 0.9);
+        border-radius: 12px;
+        padding: 1rem 0.5rem 1.25rem;
+        text-align: center;
+        border: 1px solid rgba(255, 255, 255, 0.08);
+      }
+
+      .num {
+        font-size: 2.6rem;
+        font-weight: 700;
+        line-height: 1.1;
+      }
+
+      .lbl {
+        font-size: 0.8rem;
+        letter-spacing: 0.25em;
+        text-transform: uppercase;
+        color: var(--muted);
+        margin-top: 0.4rem;
+      }
+
+      .cta-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.75rem;
+        justify-content: center;
+        margin-top: 0.5rem;
+      }
+
+      #copy-link,
+      #add-to-calendar {
+        padding: 0.7rem 1.4rem;
+        border-radius: 999px;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        background: transparent;
+        color: var(--text);
+        font-size: 0.9rem;
+        cursor: pointer;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.35rem;
+      }
+
+      #copy-link:hover,
+      #add-to-calendar:hover {
+        background: rgba(122, 162, 255, 0.2);
+        border-color: rgba(122, 162, 255, 0.8);
+      }
+
+      #status {
+        text-align: center;
+        margin-top: 0.75rem;
+        font-size: 0.85rem;
+        color: var(--muted);
+      }
+
+      @media (max-width: 720px) {
+        .card {
+          padding: 1.75rem 1.25rem 2rem;
+        }
+
+        .logo-row {
+          gap: 1rem;
+        }
+
+        .side-logo {
+          width: 70px;
+        }
+
+        .logo-row .star {
+          width: 110px;
+        }
+
+        #event-title {
+          font-size: 1.4rem;
+        }
+
+        .subtitle {
+          font-size: 0.9rem;
+          letter-spacing: 0.28em;
+        }
+
+        .grid {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+      }
     </style>
-
-   
   </head>
 
   <body>
-<body>
-   
-
-    <main class="wrap">
-
-
     <main class="wrap">
       <section class="card">
         <div class="brand">
-          <img
-            class="star"
-            src="img/cowboy-star.svg"
-            alt=""
-            aria-hidden="true"
-          />
+          <div class="logo-row">
+            <img src="img/left-logo.png" class="side-logo" alt="Left Image" />
+            <img src="img/cowboy-star.svg" class="star" alt="Star" />
+            <img src="img/right-logo.png" class="side-logo" alt="Right Image" />
+          </div>
+
           <h1 id="event-title">DALLAS COWBOYS VS KC CHIEFS</h1>
         </div>
 
@@ -266,180 +238,126 @@
         <div class="grid" aria-live="polite">
           <div class="tile">
             <div class="num" id="days">0</div>
-            <div class="lbl">Days</div>
+            <div class="lbl">DAYS</div>
           </div>
           <div class="tile">
             <div class="num" id="hours">0</div>
-            <div class="lbl">Hours</div>
+            <div class="lbl">HOURS</div>
           </div>
           <div class="tile">
-            <div class="num" id="mins">0</div>
-            <div class="lbl">Minutes</div>
+            <div class="num" id="minutes">0</div>
+            <div class="lbl">MINUTES</div>
           </div>
           <div class="tile">
-            <div class="num" id="secs">0</div>
-            <div class="lbl">Seconds</div>
+            <div class="num" id="seconds">0</div>
+            <div class="lbl">SECONDS</div>
           </div>
         </div>
 
-        <div class="controls">
-          <input class="input" id="when-input" type="datetime-local" />
-          <button class="btn primary" id="update">Set time</button>
-          <a class="btn" id="share" href="#" target="_blank" rel="noopener"
-            >Shareable link</a
-          >
-          <a class="btn" id="ics" href="#">Add to Calendar (.ics)</a>
+        <div class="cta-row">
+          <button id="copy-link" type="button">Copy shareable link</button>
+          <a id="add-to-calendar" href="#" target="_blank" rel="noopener">
+            Add to calendar
+          </a>
         </div>
-        <div class="info" id="status"></div>
-        <div class="footer">
-          Tip: use ISO time in the URL, e.g.
-          <code>?title=Concert&time=2025-12-31T20:00:00-08:00</code>
-        </div>
+
+        <div id="status"></div>
       </section>
     </main>
 
     <script>
-      (function () {
-        const qs = new URLSearchParams(location.search);
-        const title = (
-          qs.get("title") || "DALLAS COWBOYS VS CHIEFS TURKEY DAY"
-        ).replace(/\+/g, " ");
-        const timeParam = qs.get("time") || "2025-11-27T13:30:00-08:00";
+      // === Countdown setup ===
+      const EVENT_TITLE = "COWBOYS VS CHIEFS TURKEY BOWL";
+      const EVENT_TIME_ISO = "2025-11-27T13:30:00-08:00"; // 1:30 PM PST on Thanksgiving 2025
 
-        const tz =
-          qs.get("tz") || Intl.DateTimeFormat().resolvedOptions().timeZone;
+      const titleEl = document.getElementById("event-title");
+      const whenEl = document.getElementById("event-when");
+      const daysEl = document.getElementById("days");
+      const hoursEl = document.getElementById("hours");
+      const minutesEl = document.getElementById("minutes");
+      const secondsEl = document.getElementById("seconds");
+      const statusEl = document.getElementById("status");
+      const copyBtn = document.getElementById("copy-link");
+      const calLink = document.getElementById("add-to-calendar");
 
-        const titleEl = document.getElementById("event-title");
-        const whenEl = document.getElementById("event-when");
-        const statusEl = document.getElementById("status");
-        const daysEl = document.getElementById("days");
-        const hoursEl = document.getElementById("hours");
-        const minsEl = document.getElementById("mins");
-        const secsEl = document.getElementById("secs");
-        const shareEl = document.getElementById("share");
-        const icsEl = document.getElementById("ics");
-        const inputEl = document.getElementById("when-input");
+      titleEl.textContent = EVENT_TITLE;
 
-        // Default time: Nov 26, 2025 at 1:30 PM Pacific
-        let defaultDate = new Date("2025-11-27T13:30:00-08:00");
+      const eventDate = new Date(EVENT_TIME_ISO);
 
-        let eventDate = timeParam ? new Date(timeParam) : defaultDate;
-
-        function fmtLong(d) {
-          try {
-            return new Intl.DateTimeFormat(undefined, {
-              dateStyle: "full",
-              timeStyle: "long",
-              timeZone: tz,
-            }).format(d);
-          } catch {
-            return d.toString();
-          }
-        }
-
-        function pad(n) {
-          return String(n).padStart(2, "0");
-        }
-
-        function updateUrl() {
-          const iso = eventDate.toISOString();
-          const url = new URL(location.href);
-          url.searchParams.set("title", title);
-          url.searchParams.set("time", iso);
-          url.searchParams.set("tz", tz);
-          shareEl.href = url.toString();
-          shareEl.textContent = "Shareable link";
-        }
-
-        function toICS(dtStart, dtEnd, summary) {
-          // Convert to UTC in ICS friendly format YYYYMMDDTHHMMSSZ
-          const f = (d) =>
-            d
-              .toISOString()
-              .replace(/[-:]/g, "")
-              .replace(/\.\d{3}Z$/, "Z");
-          const uid = Math.random().toString(36).slice(2) + "@countdown.local";
-          return [
-            "BEGIN:VCALENDAR",
-            "VERSION:2.0",
-            "PRODID:-//Countdown//EN",
-            "BEGIN:VEVENT",
-            "UID:" + uid,
-            "DTSTAMP:" + f(new Date()),
-            "DTSTART:" + f(dtStart),
-            "DTEND:" + f(dtEnd),
-            "SUMMARY:" + summary,
-            "END:VEVENT",
-            "END:VCALENDAR",
-          ].join("\r\n");
-        }
-
-        function refreshMeta() {
-          titleEl.textContent = title;
-          whenEl.textContent =
-            "Event time: " + fmtLong(eventDate) + " (" + tz + ")";
-          const localInput = new Date(
-            eventDate.getTime() - eventDate.getTimezoneOffset() * 60000
-          );
-          inputEl.value = localInput.toISOString().slice(0, 16);
-          updateUrl();
-          const ics = toICS(
-            eventDate,
-            new Date(eventDate.getTime() + 2 * 60 * 60 * 1000),
-            title
-          );
-          const blob = new Blob([ics], { type: "text/calendar" });
-          const href = URL.createObjectURL(blob);
-          icsEl.href = href;
-          icsEl.download = (title.replace(/\s+/g, "_") || "event") + ".ics";
-        }
-
-        function tick() {
-          const now = new Date();
-          const diff = eventDate - now;
-          if (isNaN(diff)) {
-            statusEl.textContent =
-              'Invalid date. Click "Set time" and pick a valid datetime.';
-            return;
-          }
-
-          if (diff <= 0) {
-            daysEl.textContent = "00";
-            hoursEl.textContent = "00";
-            minsEl.textContent = "00";
-            secsEl.textContent = "00";
-            statusEl.innerHTML = '<span class="live">We\'re live! 🎉</span>';
-            return;
-          }
-          const d = Math.floor(diff / (24 * 3600 * 1000));
-          const h = Math.floor((diff % (24 * 3600 * 1000)) / (3600 * 1000));
-          const m = Math.floor((diff % (3600 * 1000)) / (60 * 1000));
-          const s = Math.floor((diff % (60 * 1000)) / 1000);
-
-          daysEl.textContent = String(d).padStart(2, "0");
-          hoursEl.textContent = pad(h);
-          minsEl.textContent = pad(m);
-          secsEl.textContent = pad(s);
-          statusEl.textContent = "";
-        }
-
-        document.getElementById("update").addEventListener("click", () => {
-          const val = inputEl.value;
-          if (!val) return;
-          const picked = new Date(val);
-          if (String(picked) === "Invalid Date") {
-            statusEl.textContent = "Invalid datetime.";
-            return;
-          }
-          eventDate = picked;
-          refreshMeta();
-          tick();
+      whenEl.textContent =
+        "Event time: " +
+        eventDate.toLocaleString(undefined, {
+          weekday: "long",
+          year: "numeric",
+          month: "long",
+          day: "numeric",
+          hour: "numeric",
+          minute: "2-digit",
+          timeZoneName: "short",
         });
 
-        refreshMeta();
-        tick();
-        setInterval(tick, 1000);
-      })();
+      function updateCountdown() {
+        const now = new Date();
+        const diff = eventDate - now;
+
+        if (diff <= 0) {
+          daysEl.textContent = "0";
+          hoursEl.textContent = "0";
+          minutesEl.textContent = "0";
+          secondsEl.textContent = "0";
+          statusEl.textContent = "It’s game time! 🏈🤠";
+          return;
+        }
+
+        const totalSeconds = Math.floor(diff / 1000);
+        const d = Math.floor(totalSeconds / (24 * 3600));
+        const h = Math.floor((totalSeconds % (24 * 3600)) / 3600);
+        const m = Math.floor((totalSeconds % 3600) / 60);
+        const s = totalSeconds % 60;
+
+        daysEl.textContent = d;
+        hoursEl.textContent = h.toString().padStart(2, "0");
+        minutesEl.textContent = m.toString().padStart(2, "0");
+        secondsEl.textContent = s.toString().padStart(2, "0");
+      }
+
+      updateCountdown();
+      setInterval(updateCountdown, 1000);
+
+      // === Copy link button ===
+      copyBtn.addEventListener("click", async () => {
+        try {
+          await navigator.clipboard.writeText(window.location.href);
+          statusEl.textContent = "Link copied to clipboard ✅";
+        } catch (err) {
+          statusEl.textContent = "Could not copy link.";
+        }
+      });
+
+      // === Simple "Add to calendar" link (Google Calendar) ===
+      const startUtc =
+        new Date(EVENT_TIME_ISO)
+          .toISOString()
+          .replace(/[-:]/g, "")
+          .split(".")[0] + "Z";
+      const endUtc =
+        new Date(eventDate.getTime() + 2 * 60 * 60 * 1000)
+          .toISOString()
+          .replace(/[-:]/g, "")
+          .split(".")[0] + "Z";
+
+      const calUrl =
+        "https://www.google.com/calendar/render?action=TEMPLATE&text=" +
+        encodeURIComponent(EVENT_TITLE) +
+        "&dates=" +
+        startUtc +
+        "/" +
+        endUtc +
+        "&details=" +
+        encodeURIComponent("Cowboys vs Chiefs Turkey Bowl") +
+        "&sf=true&output=xml";
+
+      calLink.href = calUrl;
     </script>
   </body>
 </html>
