@@ -59,6 +59,39 @@
                           padding: 2.5rem 2rem 2.75rem;
                           box-shadow: 0 24px 60px rgba(0, 0, 0, 0.6);
                           border: 1px solid rgba(255, 255, 255, 0.06);
+/* Stadium lights glow */
+.card::before {
+  content: "";
+  position: absolute;
+  inset: -35%;
+  pointer-events: none;
+
+  background:
+    radial-gradient(circle at 10% -10%, rgba(255, 255, 255, 0.35), transparent 60%),
+    radial-gradient(circle at 90% -10%, rgba(255, 255, 255, 0.35), transparent 60%);
+
+  opacity: 1;
+  mix-blend-mode: screen;
+  filter: blur(14px);
+  animation: stadium-lights 6s ease-in-out infinite alternate;
+}
+
+@keyframes stadium-lights {
+  from {
+    opacity: 0.4;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(18px);
+  }
+}
+
+
+
+@
+
+
                         }
 
                         .brand {
@@ -75,17 +108,80 @@
                         }
 
                         .side-logo {
-                          width: 260px;
-                          height: auto;
-                          filter: drop-shadow(0 0 6px rgba(0, 0, 0, 0.4));
-                          border-radius: 12px;
-                        }
+  width: 260px;
+  height: auto;
+  filter: drop-shadow(0 0 6px rgba(0, 0, 0, 0.4));
+  border-radius: 12px;
+}
+
+.logo-row {
+  position: relative;
+}
+
+.logo-row .star {
+  width: 140px;
+  height: auto;
+  display: inline-block;
+  transform-origin: 50% 50%;
+  filter: drop-shadow(0 0 10px rgba(0, 180, 255, 0.7));
+  animation: spin 14s linear infinite, star-glow 3s ease-in-out infinite alternate;
+}
+/* Light sweep passing over the stars */
+/* Light sweep passing over the stars */
+.logo-row::before {
+  content: "";
+  position: absolute;
+  top: -10%;
+  left: -30%;
+  width: 60%;
+  height: 120%;
+  pointer-events: none;
+
+  background: linear-gradient(
+    120deg,
+    rgba(255, 255, 255, 0.0) 0%,
+    rgba(255, 255, 255, 0.0) 35%,
+    rgba(255, 255, 255, 0.8) 50%,
+    rgba(180, 220, 255, 0.9) 55%,
+    rgba(255, 255, 255, 0.0) 65%,
+    rgba(255, 255, 255, 0.0) 100%
+  );
+
+  opacity: 0;
+  transform: skewX(-20deg);
+  mix-blend-mode: screen;     /* makes it “light” instead of solid white */
+  animation: star-sweep 3.5s linear infinite;
+}
+
+
 
                         .logo-row .star {
-                          width: 140px;
-                          height: auto;
-                          display: inline-block;
-                          transform-origin: 50% 50%;
+  width: 140px;
+  height: auto;
+  display: inline-block;
+  transform-origin: 50% 50%;
+  filter: drop-shadow(0 0 10px rgba(0, 180, 255, 0.7));
+  animation: spin 14s linear infinite, star-glow 3s ease-in-out infinite alternate;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes star-glow {
+  from {
+    filter: drop-shadow(0 0 8px rgba(0, 180, 255, 0.5));
+  }
+  to {
+    filter: drop-shadow(0 0 24px rgba(0, 220, 255, 1));
+  }
+}
+
 
                           /* base glow */
                           filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.7));
@@ -255,16 +351,23 @@
     <main class="wrap">
       <section class="card">
         <div class="brand">
-          <div class="logo-row">
-            <img src="img/left-logo.png" class="side-logo" alt="Left Image" />
-            <img src="img/cowboy-star.svg" class="star" alt="Star" />
-            <img src="img/cowboy-star.svg" class="star" alt="Right Image" />
-            
-            
-          </div>
+  <div class="logo-row">
+    <img src="img/left-logo.png" class="side-logo" alt="Left Image" />
+    <img src="img/cowboy-star.svg" class="star" alt="Star" />
+    <img src="img/cowboy-star.svg" class="star" alt="Right Image" />
+  </div>
 
-          <h1 id="event-title">DALLAS COWBOYS VS VIKINGS</h1>
-        </div>
+  <!-- 👇 add this new row right under the logo-row -->
+  <div class="game-badge-row">
+    <span class="game-badge">WEEK 15</span>
+    <span class="game-badge">VIKINGS<@ Cowboys</span>
+    <span class="game-badge">SUN · 7:20 PM CT</span>
+  </div>
+  <!-- 👆 end new row -->
+
+  <h1 id="event-title">SUNDAY NIGHT FOOTBALL!!! COWBOYS VS VIKINGS</h1>
+  ...
+
 
         <p class="subtitle" id="event-tagline">HERE WE GO!!!!!!!</p>
         <a href="#" id="itinerary-btn" class="itinerary-link">ITINERARY</a>
