@@ -381,6 +381,8 @@
 
         <p class="subtitle" id="event-tagline">THIS IS OUR YEAR 2026-2027!! SUPERBOWL SOFI STADIUM!! 4 REAL THIS TIme!!!</p>
         <a href="#" id="itinerary-btn" class="itinerary-link">ITINERARY</a>
+<a href="#" id="schedule-btn" class="itinerary-link">SCHEDULE</a>
+
 
         <div class="event-when" id="event-when"></div>
         
@@ -459,6 +461,30 @@
     <strong>Travelers:</strong> ME AND MY BUTT ON THE COUCH!!
   </p>
 </section>
+<section id="schedule" class="card hidden" style="margin-top: 2rem;">
+  <h2 class="event-title">Cowboys 2026–2027 Schedule</h2>
+  <p class="subtitle">Week-by-week games (18 weeks)</p>
+
+  <div class="schedule-controls">
+    <label for="weekSelect">Jump to week:</label>
+    <select id="weekSelect"></select>
+  </div>
+
+  <div class="schedule-table-wrap">
+    <table class="schedule-table">
+      <thead>
+        <tr>
+          <th>Week</th>
+          <th>Date / Time</th>
+          <th>Matchup</th>
+          <th>Home/Away</th>
+        </tr>
+      </thead>
+      <tbody id="scheduleBody"></tbody>
+    </table>
+  </div>
+</section>
+
 
 
     <script>
@@ -557,6 +583,8 @@
       // section id="itinerary" class="card hidden"
       const itineraryBtn = document.getElementById("itinerary-btn");
       const itinerarySection = document.getElementById("itinerary");
+      const scheduleBtn = document.getElementById("schedule-btn");
+const scheduleSection = document.getElementById("schedule");
 
       if (itineraryBtn && itinerarySection) {
         itineraryBtn.addEventListener("click", (event) => {
@@ -565,6 +593,20 @@
 
           if (!itinerarySection.classList.contains("hidden")) {
             itinerarySection.scrollIntoView({
+              behavior: "smooth",
+              block: "start",
+            });
+          }
+        });
+      }
+
+      if (scheduleBtn && scheduleSection) {
+        scheduleBtn.addEventListener("click", (event) => {
+          event.preventDefault();
+          scheduleSection.classList.toggle("hidden");
+
+          if (!scheduleSection.classList.contains("hidden")) {
+            scheduleSection.scrollIntoView({
               behavior: "smooth",
               block: "start",
             });
