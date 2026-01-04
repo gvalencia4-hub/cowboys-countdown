@@ -463,26 +463,29 @@
 </section>
 <section id="schedule" class="card hidden" style="margin-top: 2rem;">
   <h2 class="event-title">Cowboys 2026–2027 Schedule</h2>
-  <p class="subtitle">Week-by-week games (18 weeks)</p>
+<p class="subtitle">Week-by-week games (18 weeks)</p>
 
-  <div class="schedule-controls">
-    <label for="weekSelect">Jump to week:</label>
-    <select id="weekSelect"></select>
-  </div>
+<div class="schedule-controls">
+  <label for="weekSelect">Jump to week:</label>
+  <select id="weekSelect">
+    <option value="">Select a week</option>
+  </select>
+</div>
 
-  <div class="schedule-table-wrap">
-    <table class="schedule-table">
-      <thead>
-        <tr>
-          <th>Week</th>
-          <th>Date / Time</th>
-          <th>Matchup</th>
-          <th>Home/Away</th>
-        </tr>
-      </thead>
-      <tbody id="scheduleBody"></tbody>
-    </table>
-  </div>
+<div class="schedule-table-wrap">
+  <table class="schedule-table">
+    <thead>
+      <tr>
+        <th>Week</th>
+        <th>Date / Time</th>
+        <th>Matchup</th>
+        <th>Home/Away</th>
+      </tr>
+    </thead>
+    <tbody id="scheduleBody"></tbody>
+  </table>
+</div>
+
 </section>
 
 
@@ -585,6 +588,79 @@
       const itinerarySection = document.getElementById("itinerary");
       const scheduleBtn = document.getElementById("schedule-btn");
 const scheduleSection = document.getElementById("schedule");
+const scheduleBody = document.getElementById("scheduleBody");
+const weekSelect = document.getElementById("weekSelect");
+
+// ============================
+// SCHEDULE DATA (edit later)
+// ============================
+const cowboysSchedule = [
+  { week: 1,  dateTime: "Thu 09/04",           matchup: "Cowboys @ Eagles",      homeAway: "Away" },
+  { week: 2,  dateTime: "Sun 09/14",           matchup: "Giants @ Cowboys",      homeAway: "Home" },
+  { week: 3,  dateTime: "Sun 09/21",           matchup: "Cowboys @ Bears",       homeAway: "Away" },
+  { week: 4,  dateTime: "Sun 09/28",           matchup: "Packers @ Cowboys",     homeAway: "Home" },
+  { week: 5,  dateTime: "Sun 10/05",           matchup: "Cowboys @ Jets",        homeAway: "Away" },
+  { week: 6,  dateTime: "Sun 10/12",           matchup: "Cowboys @ Panthers",    homeAway: "Away" },
+  { week: 7,  dateTime: "Sun 10/19",           matchup: "Commanders @ Cowboys",  homeAway: "Home" },
+  { week: 8,  dateTime: "Sun 10/26",           matchup: "Cowboys @ Broncos",     homeAway: "Away" },
+  { week: 9,  dateTime: "Mon 11/03",           matchup: "Cardinals @ Cowboys",   homeAway: "Home" },
+  { week: 10, dateTime: "BYE",                 matchup: "BYE WEEK",              homeAway: "—"    },
+  { week: 11, dateTime: "Mon 11/17",           matchup: "Cowboys @ Raiders",     homeAway: "Away" },
+  { week: 12, dateTime: "Sun 11/23",           matchup: "Eagles @ Cowboys",      homeAway: "Home" },
+  { week: 13, dateTime: "Thu 11/27",           matchup: "Chiefs @ Cowboys",      homeAway: "Home" },
+  { week: 14, dateTime: "Thu 12/04",           matchup: "Cowboys @ Lions",       homeAway: "Away" },
+  { week: 15, dateTime: "Sun 12/14",           matchup: "Vikings @ Cowboys",     homeAway: "Home" },
+  { week: 16, dateTime: "Sun 12/21",           matchup: "Chargers @ Cowboys",    homeAway: "Home" },
+  { week: 17, dateTime: "Thu 12/25",           matchup: "Cowboys @ Commanders",  homeAway: "Away" },
+  { week: 18, dateTime: "Sun 01/04 12:00 PM",  matchup: "Cowboys @ Giants",      homeAway: "Away" },
+];
+
+
+// ============================
+// RENDER SCHEDULE TABLE + DROPDOWN
+// ============================
+function renderSchedule() {
+  if (!scheduleBody || !weekSelect) return;
+
+  // Clear existing
+  scheduleBody.innerHTML = "";
+  weekSelect.innerHTML = `<option value="">Select a week</option>`;
+
+  cowboysSchedule.forEach((game) => {
+    // Dropdown option
+    const opt = document.createElement("option");
+    opt.value = String(game.week);
+    opt.textContent = `Week ${game.week}`;
+    weekSelect.appendChild(opt);
+
+    // Table row
+    const tr = document.createElement("tr");
+    tr.id = `week-${game.week}`;
+
+    tr.innerHTML = `
+      <td>Week ${game.week}</td>
+      <td>${game.dateTime}</td>
+      <td>${game.matchup}</td>
+      <td>${game.homeAway}</td>
+    `;
+
+    scheduleBody.appendChild(tr);
+  });
+
+  // Jump to week behavior
+  weekSelect.addEventListener("change", () => {
+    const week = weekSelect.value;
+    if (!week) return;
+
+    const row = document.getElementById(`week-${week}`);
+    if (row) row.scrollIntoView({ behavior: "smooth", block: "start" });
+  });
+}
+
+// Call once on page load
+renderSchedule();
+
+
 
       if (itineraryBtn && itinerarySection) {
         itineraryBtn.addEventListener("click", (event) => {
