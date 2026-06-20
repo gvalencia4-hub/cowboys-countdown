@@ -217,32 +217,53 @@ const cowboysSchedule = [
 ];
 
 // ==========================
-// RECORD SYSTEM
+// ADMIN / RESULTS SYSTEM
 // ==========================
-let wins = Number(localStorage.getItem("wins")) || 0;
-let losses = Number(localStorage.getItem("losses")) || 0;
 let isAdminUnlocked = false;
+let gameResults = JSON.parse(localStorage.getItem("gameResults")) || {};
 
 const recordDisplay = document.getElementById("record-display");
+const nextGameDisplay = document.getElementById("next-game-display");
+const nextGameDate = document.getElementById("next-game-date");
 
-function updateRecordDisplay() {
-  if (!recordDisplay) return;
-
-  recordDisplay.textContent = `${wins} - ${losses}`;
-
-  localStorage.setItem("wins", wins);
-  localStorage.setItem("losses", losses);
+function saveResults() {
+  localStorage.setItem("gameResults", JSON.stringify(gameResults));
 }
 
-function resetGameButtons() {
-  document.querySelectorAll("td[data-completed]").forEach((cell) => {
-    cell.dataset.completed = "false";
+function calculateRecord() {
+  let wins = 0;
+  let losses = 0;
+
+  Object.values(gameResults).forEach((result) => {
+    if (result === "W") wins++;
+    if (result === "L") losses++;
   });
 
-  document.querySelectorAll(".result-btn").forEach((button) => {
-    button.style.display = "inline-block";
-    button.classList.remove("selected-result");
+  if (recordDisplay) {
+    recordDisplay.textContent = `${wins} - ${losses}`;
+  }
+}
+
+function updateNextGame() {
+  const nextGame = cowboysSchedule.find((game) => {
+    return game.matchup !== "BYE WEEK" && !gameResults[game.week];
   });
+
+  if (!nextGameDisplay || !nextGameDate) return;
+
+  if (nextGame) {
+    nextGameDisplay.textContent = nextGame.matchup;
+    nextGameDate.textContent = nextGame.dateTime;
+  } else {
+    nextGameDisplay.textContent = "Season Complete";
+    nextGameDate.textContent = "All games have results";
+  }
+}
+
+function updateAppState() {
+  saveResults();
+  calculateRecord();
+  updateNextGame();
 }
 
 // ==========================
@@ -268,15 +289,30 @@ function renderSchedule() {
 
     if (game.week === 1) tr.classList.add("current-week");
 
+    const savedResult = gameResults[game.week];
+
+    if (savedResult === "W") tr.classList.add("game-win");
+    if (savedResult === "L") tr.classList.add("game-loss");
+
+    let resultCell = "";
+
+    if (game.matchup === "BYE WEEK") {
+      resultCell = `<span class="bye-result">BYE</span>`;
+    } else if (savedResult) {
+      resultCell = `<span class="saved-result">${savedResult}</span>`;
+    } else {
+      resultCell = `
+        <button class="result-btn win-btn" data-week="${game.week}" data-result="W">W</button>
+        <button class="result-btn loss-btn" data-week="${game.week}" data-result="L">L</button>
+      `;
+    }
+
     tr.innerHTML = `
       <td>Week ${game.week}</td>
       <td>${game.dateTime}</td>
       <td>${game.matchup}</td>
       <td>${game.homeAway}</td>
-      <td>
-        <button class="result-btn win-btn" data-result="W">W</button>
-        <button class="result-btn loss-btn" data-result="L">L</button>
-      </td>
+      <td>${resultCell}</td>
     `;
 
     scheduleBody.appendChild(tr);
@@ -292,7 +328,7 @@ function renderSchedule() {
 }
 
 renderSchedule();
-updateRecordDisplay();
+updateAppState();
 
 // ==========================
 // ADMIN LOGIN
@@ -302,6 +338,7 @@ const adminPassword = document.getElementById("admin-password");
 const adminControls = document.getElementById("admin-controls");
 const adminLogin = document.getElementById("admin-login");
 const adminStatus = document.getElementById("admin-status");
+
 if (loginBtn && adminPassword && adminControls && adminLogin && adminStatus) {
   loginBtn.addEventListener("click", () => {
     if (adminPassword.value === "cowboys2026") {
@@ -323,10 +360,10 @@ const resetRecordBtn = document.getElementById("reset-record-btn");
 
 if (resetRecordBtn) {
   resetRecordBtn.addEventListener("click", () => {
-    wins = 0;
-    losses = 0;
-    updateRecordDisplay();
-    resetGameButtons();
+    gameResults = {};
+    localStorage.removeItem("gameResults");
+    renderSchedule();
+    updateAppState();
   });
 }
 
@@ -341,26 +378,11 @@ document.addEventListener("click", function (event) {
     return;
   }
 
-  const cell = event.target.parentElement;
-
-  if (cell.dataset.completed === "true") return;
-
+  const week = event.target.dataset.week;
   const result = event.target.dataset.result;
 
-  if (result === "W") wins++;
-  if (result === "L") losses++;
+  gameResults[week] = result;
 
-  cell.dataset.completed = "true";
-
-  const buttons = cell.querySelectorAll(".result-btn");
-
-  buttons.forEach((button) => {
-    if (button !== event.target) {
-      button.style.display = "none";
-    }
-  });
-
-  event.target.classList.add("selected-result");
-
-  updateRecordDisplay();
+  renderSchedule();
+  updateAppState();
 });
