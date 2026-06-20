@@ -225,12 +225,18 @@ let gameResults = JSON.parse(localStorage.getItem("gameResults")) || {};
 const recordDisplay = document.getElementById("record-display");
 const nextGameDisplay = document.getElementById("next-game-display");
 const nextGameDate = document.getElementById("next-game-date");
+const gamesPlayedEl = document.getElementById("games-played");
+const winPercentEl = document.getElementById("win-percent");
+const currentStreakEl = document.getElementById("current-streak");
 
+const seasonProgressEl = document.getElementById("season-progress");
+const progressTextEl = document.getElementById("progress-text");
+const lastResultEl = document.getElementById("last-result");
 function saveResults() {
   localStorage.setItem("gameResults", JSON.stringify(gameResults));
 }
 
-function calculateRecord() {
+function getRecordStats() {
   let wins = 0;
   let losses = 0;
 
@@ -239,8 +245,82 @@ function calculateRecord() {
     if (result === "L") losses++;
   });
 
+  return {
+    wins,
+    losses,
+    gamesPlayed: wins + losses,
+  };
+}
+
+function calculateRecord() {
+  const { wins, losses } = getRecordStats();
+
   if (recordDisplay) {
     recordDisplay.textContent = `${wins} - ${losses}`;
+  }
+}
+
+function calculateCurrentStreak() {
+  const playedGames = cowboysSchedule
+    .filter((game) => game.matchup !== "BYE WEEK" && gameResults[game.week])
+    .map((game) => gameResults[game.week]);
+
+  if (playedGames.length === 0) return "—";
+
+  const latestResult = playedGames[playedGames.length - 1];
+  let streakCount = 0;
+
+  for (let i = playedGames.length - 1; i >= 0; i--) {
+    if (playedGames[i] === latestResult) {
+      streakCount++;
+    } else {
+      break;
+    }
+  }
+
+  return `${latestResult}${streakCount}`;
+}
+
+function updateSeasonStats() {
+  const { wins, gamesPlayed } = getRecordStats();
+
+  if (gamesPlayedEl) {
+    gamesPlayedEl.textContent = `${gamesPlayed} / 17`;
+  }
+
+  if (winPercentEl) {
+    const winPercent =
+      gamesPlayed === 0
+        ? ".000"
+        : (wins / gamesPlayed).toFixed(3).replace(/^0/, "");
+
+    winPercentEl.textContent = winPercent;
+  }
+
+  if (seasonProgressEl && progressTextEl) {
+    const progress = (gamesPlayed / 17) * 100;
+
+    seasonProgressEl.style.width = `${progress}%`;
+    progressTextEl.textContent = `${Math.round(progress)}%`;
+  }
+
+  if (currentStreakEl) {
+    currentStreakEl.textContent = calculateCurrentStreak();
+  }
+
+  if (lastResultEl) {
+    const playedGames = cowboysSchedule.filter(
+      (game) => game.matchup !== "BYE WEEK" && gameResults[game.week],
+    );
+
+    if (playedGames.length === 0) {
+      lastResultEl.textContent = "No games played yet";
+    } else {
+      const lastGame = playedGames[playedGames.length - 1];
+      const lastResult = gameResults[lastGame.week];
+
+      lastResultEl.textContent = `${lastResult} - ${lastGame.matchup}`;
+    }
   }
 }
 
@@ -263,6 +343,7 @@ function updateNextGame() {
 function updateAppState() {
   saveResults();
   calculateRecord();
+  updateSeasonStats();
   updateNextGame();
 }
 
