@@ -63,49 +63,42 @@
                           padding: 2.5rem 2rem 2.75rem;
                           box-shadow: 0 24px 60px rgba(0, 0, 0, 0.6);
                           border: 1px solid rgba(255, 255, 255, 0.06);
-/* Stadium lights glow */
-.card::before {
-  content: "";
-  position: absolute;
-  inset: -35%;
-  pointer-events: none;
+                          position: relative;
+                        }
 
-  .page-footer {
-  margin-top: 2.5rem;
-  padding: 1.5rem 0 2.5rem;
-  text-align: center;
-  font-size: 0.85rem;
-  letter-spacing: 0.08em;
-  color: rgba(255, 255, 255, 0.6);
-}
+                        /* Stadium lights glow */
+                        .card::before {
+                          content: "";
+                          position: absolute;
+                          inset: -35%;
+                          pointer-events: none;
+                          background:
+                            radial-gradient(circle at 10% -10%, rgba(255, 255, 255, 0.35), transparent 60%),
+                            radial-gradient(circle at 90% -10%, rgba(255, 255, 255, 0.35), transparent 60%);
+                          opacity: 1;
+                          mix-blend-mode: screen;
+                          filter: blur(14px);
+                          animation: stadium-lights 6s ease-in-out infinite alternate;
+                        }
 
+                        @keyframes stadium-lights {
+                          from {
+                            opacity: 0.4;
+                            transform: translateY(-10px);
+                          }
+                          to {
+                            opacity: 1;
+                            transform: translateY(18px);
+                          }
+                        }
 
-  background:
-    radial-gradient(circle at 10% -10%, rgba(255, 255, 255, 0.35), transparent 60%),
-    radial-gradient(circle at 90% -10%, rgba(255, 255, 255, 0.35), transparent 60%);
-
-  opacity: 1;
-  mix-blend-mode: screen;
-  filter: blur(14px);
-  animation: stadium-lights 6s ease-in-out infinite alternate;
-}
-
-@keyframes stadium-lights {
-  from {
-    opacity: 0.4;
-    transform: translateY(-10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(18px);
-  }
-}
-
-
-
-@
-
-
+                        .page-footer {
+                          margin-top: 2.5rem;
+                          padding: 1.5rem 0 2.5rem;
+                          text-align: center;
+                          font-size: 0.85rem;
+                          letter-spacing: 0.08em;
+                          color: rgba(255, 255, 255, 0.6);
                         }
 
                         .brand {
@@ -196,24 +189,6 @@
   }
 }
 
-
-                          /* base glow */
-                          filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.7));
-
-                          /* spin + glow pulse */
-                          animation: star-spin 4s linear infinite,
-                            star-glow 1.8s ease-in-out infinite alternate;
-                        }
-
-                        @keyframes star-spin {
-                          from {
-                            transform: rotate(0deg);
-                          }
-                          to {
-                            transform: rotate(360deg);
-                          }
-                        }
-
                         #event-title {
                           font-size: 1.9rem;
                           letter-spacing: 0.08em;
@@ -247,14 +222,11 @@
                           background 0.15s ease;
             }
 
-                          }
-
-                          .itinerary-link:hover {
-                            transform: translateY(-2px);
-                            box-shadow: 0 0 20px rgba(255, 255, 255, 0.8);
-                            background: #2563eb;
-                          }
-                        }
+            .itinerary-link:hover {
+              transform: translateY(-2px);
+              box-shadow: 0 0 20px rgba(255, 255, 255, 0.8);
+              background: #2563eb;
+            }
 
                         .event-when {
                           text-align: center;
@@ -408,18 +380,50 @@
           </div>
         </div>
 <div class="season-info">
+
+  <!-- RECORD CARD -->
   <div class="info-card">
+
     <h3>2026 RECORD</h3>
-<p id="record-display">0 - 0</p>
 
-<button id="reset-record-btn">Reset Record</button>
+    <p id="record-display">0 - 0</p>
+
+    <div id="admin-login">
+      <input
+        type="password"
+        id="admin-password"
+        placeholder="Admin Password"
+      />
+      <button id="login-btn">Unlock</button>
+    </div>
+
+    <p id="admin-status" style="display:none;">
+      Admin Mode Active
+    </p>
+
+    <div id="admin-controls" style="display:none;">
+      <button id="reset-record-btn">
+        Admin Mode: Reset Record
+      </button>
+    </div>
+
   </div>
 
+  <!-- NEXT GAME CARD -->
   <div class="info-card">
+
     <h3>NEXT GAME</h3>
-    <p id="next-game-display">Cowboys @ Giants</p>
-    <p id="next-game-date">September 13, 2026 • 7:20 PM ET</p>
+
+    <p id="next-game-display">
+      Cowboys @ Giants
+    </p>
+
+    <p id="next-game-date">
+      September 13, 2026 • 7:20 PM ET
+    </p>
+
   </div>
+
 </div>
         <div class="cta-row">
           <button id="copy-link" type="button">Copy shareable link</button>

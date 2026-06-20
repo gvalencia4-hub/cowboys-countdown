@@ -1,13 +1,13 @@
 const EVENT_TITLE = "COUNTDOWN TO THE 2026 SEASON!";
 const EVENT_TIME_ISO = "2026-09-13T19:20:00-04:00";
 
-// Optional title/when text (only runs if elements exist)
+// ==========================
+// TITLE / DATE
+// ==========================
 const titleEl = document.getElementById("event-title");
 const whenEl = document.getElementById("event-when");
 
-if (titleEl) {
-  titleEl.textContent = EVENT_TITLE;
-}
+if (titleEl) titleEl.textContent = EVENT_TITLE;
 
 if (whenEl) {
   const eventDate = new Date(EVENT_TIME_ISO);
@@ -22,7 +22,7 @@ if (whenEl) {
 }
 
 // ==========================
-//   COUNTDOWN TIMER
+// COUNTDOWN TIMER
 // ==========================
 const daysEl = document.getElementById("days");
 const hoursEl = document.getElementById("hours");
@@ -34,7 +34,7 @@ function updateCountdown() {
 
   const now = new Date().getTime();
   const eventTime = new Date(EVENT_TIME_ISO).getTime();
-  let diff = eventTime - now;
+  const diff = eventTime - now;
 
   if (diff <= 0) {
     daysEl.textContent = "0";
@@ -45,22 +45,19 @@ function updateCountdown() {
     return;
   }
 
-  const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-  const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-  const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-  const seconds = Math.floor((diff % (1000 * 60)) / 1000);
-
-  daysEl.textContent = days;
-  hoursEl.textContent = hours;
-  minutesEl.textContent = minutes;
-  secondsEl.textContent = seconds;
+  daysEl.textContent = Math.floor(diff / (1000 * 60 * 60 * 24));
+  hoursEl.textContent = Math.floor(
+    (diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60),
+  );
+  minutesEl.textContent = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+  secondsEl.textContent = Math.floor((diff % (1000 * 60)) / 1000);
 }
 
 const countdownInterval = setInterval(updateCountdown, 1000);
 updateCountdown();
 
 // ==========================
-//   COPY SHAREABLE LINK
+// COPY SHAREABLE LINK
 // ==========================
 const copyBtn = document.getElementById("copy-link");
 const statusEl = document.getElementById("status");
@@ -70,7 +67,7 @@ if (copyBtn && statusEl) {
     try {
       await navigator.clipboard.writeText(window.location.href);
       statusEl.textContent = "Link copied!";
-    } catch (err) {
+    } catch {
       statusEl.textContent = "Could not copy link.";
     }
 
@@ -81,20 +78,38 @@ if (copyBtn && statusEl) {
 }
 
 // ==========================
-//   ITINERARY TOGGLE
+// SECTIONS
 // ==========================
-// button id="itinerary-btn"
-// section id="itinerary" class="card hidden"
 const itineraryBtn = document.getElementById("itinerary-btn");
 const itinerarySection = document.getElementById("itinerary");
 const scheduleBtn = document.getElementById("schedule-btn");
 const scheduleSection = document.getElementById("schedule");
-const scheduleBody = document.getElementById("scheduleBody");
-const weekSelect = document.getElementById("weekSelect");
 
-// ============================
-// SCHEDULE DATA (edit later)
-// ============================
+if (itineraryBtn && itinerarySection) {
+  itineraryBtn.addEventListener("click", (event) => {
+    event.preventDefault();
+    itinerarySection.classList.toggle("hidden");
+
+    if (!itinerarySection.classList.contains("hidden")) {
+      itinerarySection.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  });
+}
+
+if (scheduleBtn && scheduleSection) {
+  scheduleBtn.addEventListener("click", (event) => {
+    event.preventDefault();
+    scheduleSection.classList.toggle("hidden");
+
+    if (!scheduleSection.classList.contains("hidden")) {
+      scheduleSection.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  });
+}
+
+// ==========================
+// SCHEDULE DATA
+// ==========================
 const cowboysSchedule = [
   {
     week: 1,
@@ -201,44 +216,72 @@ const cowboysSchedule = [
   },
 ];
 
-// ============================
-// RENDER SCHEDULE TABLE + DROPDOWN
-// ============================
+// ==========================
+// RECORD SYSTEM
+// ==========================
+let wins = Number(localStorage.getItem("wins")) || 0;
+let losses = Number(localStorage.getItem("losses")) || 0;
+let isAdminUnlocked = false;
+
+const recordDisplay = document.getElementById("record-display");
+
+function updateRecordDisplay() {
+  if (!recordDisplay) return;
+
+  recordDisplay.textContent = `${wins} - ${losses}`;
+
+  localStorage.setItem("wins", wins);
+  localStorage.setItem("losses", losses);
+}
+
+function resetGameButtons() {
+  document.querySelectorAll("td[data-completed]").forEach((cell) => {
+    cell.dataset.completed = "false";
+  });
+
+  document.querySelectorAll(".result-btn").forEach((button) => {
+    button.style.display = "inline-block";
+    button.classList.remove("selected-result");
+  });
+}
+
+// ==========================
+// RENDER SCHEDULE
+// ==========================
+const scheduleBody = document.getElementById("scheduleBody");
+const weekSelect = document.getElementById("weekSelect");
+
 function renderSchedule() {
   if (!scheduleBody || !weekSelect) return;
 
-  // Clear existing
   scheduleBody.innerHTML = "";
   weekSelect.innerHTML = `<option value="">Select a week</option>`;
 
   cowboysSchedule.forEach((game) => {
-    // Dropdown option
     const opt = document.createElement("option");
     opt.value = String(game.week);
     opt.textContent = `Week ${game.week}`;
     weekSelect.appendChild(opt);
 
-    // Table row
     const tr = document.createElement("tr");
     tr.id = `week-${game.week}`;
-    if (game.week === 1) {
-      tr.classList.add("current-week");
-    }
+
+    if (game.week === 1) tr.classList.add("current-week");
+
     tr.innerHTML = `
-  <td>Week ${game.week}</td>
-  <td>${game.dateTime}</td>
-  <td>${game.matchup}</td>
-  <td>${game.homeAway}</td>
-  <td>
-    <button class="result-btn win-btn" data-result="W">W</button>
-    <button class="result-btn loss-btn" data-result="L">L</button>
-  </td>
-`;
+      <td>Week ${game.week}</td>
+      <td>${game.dateTime}</td>
+      <td>${game.matchup}</td>
+      <td>${game.homeAway}</td>
+      <td>
+        <button class="result-btn win-btn" data-result="W">W</button>
+        <button class="result-btn loss-btn" data-result="L">L</button>
+      </td>
+    `;
 
     scheduleBody.appendChild(tr);
   });
 
-  // Jump to week behavior
   weekSelect.addEventListener("change", () => {
     const week = weekSelect.value;
     if (!week) return;
@@ -248,20 +291,55 @@ function renderSchedule() {
   });
 }
 
-// Call once on page load
-// Call once on page load
 renderSchedule();
+updateRecordDisplay();
 
-let wins = 0;
-let losses = 0;
-
-function updateRecordDisplay() {
-  const recordDisplay = document.getElementById("record-display");
-  recordDisplay.textContent = `${wins} - ${losses}`;
+// ==========================
+// ADMIN LOGIN
+// ==========================
+const loginBtn = document.getElementById("login-btn");
+const adminPassword = document.getElementById("admin-password");
+const adminControls = document.getElementById("admin-controls");
+const adminLogin = document.getElementById("admin-login");
+const adminStatus = document.getElementById("admin-status");
+if (loginBtn && adminPassword && adminControls && adminLogin && adminStatus) {
+  loginBtn.addEventListener("click", () => {
+    if (adminPassword.value === "cowboys2026") {
+      isAdminUnlocked = true;
+      adminControls.style.display = "block";
+      adminLogin.style.display = "none";
+      adminStatus.style.display = "block";
+      alert("Admin unlocked");
+    } else {
+      alert("Wrong password");
+    }
+  });
 }
 
+// ==========================
+// RESET RECORD BUTTON
+// ==========================
+const resetRecordBtn = document.getElementById("reset-record-btn");
+
+if (resetRecordBtn) {
+  resetRecordBtn.addEventListener("click", () => {
+    wins = 0;
+    losses = 0;
+    updateRecordDisplay();
+    resetGameButtons();
+  });
+}
+
+// ==========================
+// SCHEDULE W/L BUTTONS
+// ==========================
 document.addEventListener("click", function (event) {
   if (!event.target.classList.contains("result-btn")) return;
+
+  if (!isAdminUnlocked) {
+    alert("Admin password required to update results.");
+    return;
+  }
 
   const cell = event.target.parentElement;
 
@@ -269,11 +347,8 @@ document.addEventListener("click", function (event) {
 
   const result = event.target.dataset.result;
 
-  if (result === "W") {
-    wins++;
-  } else if (result === "L") {
-    losses++;
-  }
+  if (result === "W") wins++;
+  if (result === "L") losses++;
 
   cell.dataset.completed = "true";
 
@@ -289,50 +364,3 @@ document.addEventListener("click", function (event) {
 
   updateRecordDisplay();
 });
-
-if (itineraryBtn && itinerarySection) {
-  itineraryBtn.addEventListener("click", (event) => {
-    event.preventDefault();
-    itinerarySection.classList.toggle("hidden");
-
-    if (!itinerarySection.classList.contains("hidden")) {
-      itinerarySection.scrollIntoView({
-        behavior: "smooth",
-        block: "start",
-      });
-    }
-  });
-}
-
-if (scheduleBtn && scheduleSection) {
-  scheduleBtn.addEventListener("click", (event) => {
-    event.preventDefault();
-    scheduleSection.classList.toggle("hidden");
-
-    if (!scheduleSection.classList.contains("hidden")) {
-      scheduleSection.scrollIntoView({
-        behavior: "smooth",
-        block: "start",
-      });
-    }
-  });
-}
-const resetBtn = document.getElementById("reset-record-btn");
-
-if (resetBtn) {
-  resetBtn.addEventListener("click", () => {
-    wins = 0;
-    losses = 0;
-
-    updateRecordDisplay();
-
-    document.querySelectorAll("td[data-completed]").forEach((cell) => {
-      cell.dataset.completed = "false";
-    });
-
-    document.querySelectorAll(".result-btn").forEach((button) => {
-      button.style.display = "inline-block";
-      button.classList.remove("selected-result");
-    });
-  });
-}
