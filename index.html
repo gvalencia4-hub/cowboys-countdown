@@ -1,11 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>COWBOY TIME!!!</title>
+  
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <style>
+  <title>COWBOY TIME!!!</title>
+
+  <link rel="stylesheet" href="css/styles.css">
+
+  <style>
             .hidden {
           display: none;
       }
@@ -368,21 +372,20 @@
   </div>
 
   <!-- 👇 add this new row right under the logo-row -->
-  <div class="game-badge-row">
-    <span class="game-badge">LAST GAME WEEK 18</span>
-    <span class="game-badge">COWBOYS@Giants</span>
-    <span class="game-badge">SUN · 04 2026 10AM THEN PLAYOFFS!! NOT US!!</span>
-  </div>
-  <!-- 👆 end new row -->
+<div class="game-badge-row">
+  <span class="game-badge">2026 SEASON</span>
+  <span class="game-badge">COWBOYS @ GIANTS</span>
+  <span class="game-badge">SEASON OPENER • SEPTEMBER 13</span>
+</div>
 
-  <h1 id="event-title">What's next? Damn Boys!!!!</h1>
+<h1 id="event-title">Dallas Cowboys 2026 Season Tracker</h1>
 
+<p class="subtitle" id="event-tagline">
+  Follow every game, countdown, and matchup for the 2026 Dallas Cowboys season.
+</p>
 
-
-        <p class="subtitle" id="event-tagline">THIS IS OUR YEAR 2026-2027!! SUPERBOWL SOFI STADIUM!! 4 REAL THIS TIme!!!</p>
-        <a href="#" id="itinerary-btn" class="itinerary-link">ITINERARY</a>
+<a href="#" id="itinerary-btn" class="itinerary-link">ITINERARY</a>
 <a href="#" id="schedule-btn" class="itinerary-link">SCHEDULE</a>
-
 
         <div class="event-when" id="event-when"></div>
         
@@ -404,7 +407,20 @@
             <div class="lbl">SECONDS</div>
           </div>
         </div>
+<div class="season-info">
+  <div class="info-card">
+    <h3>2026 RECORD</h3>
+<p id="record-display">0 - 0</p>
 
+<button id="reset-record-btn">Reset Record</button>
+  </div>
+
+  <div class="info-card">
+    <h3>NEXT GAME</h3>
+    <p id="next-game-display">Cowboys @ Giants</p>
+    <p id="next-game-date">September 13, 2026 • 7:20 PM ET</p>
+  </div>
+</div>
         <div class="cta-row">
           <button id="copy-link" type="button">Copy shareable link</button>
           <a id="add-to-calendar" href="#" target="_blank" rel="noopener">
@@ -462,7 +478,7 @@
   </p>
 </section>
 <section id="schedule" class="card hidden" style="margin-top: 2rem;">
-  <h2 class="event-title">Cowboys 2026–2027 Schedule</h2>
+  <h2 class="event-title">Cowboys 2026 Schedule</h2>
 <p class="subtitle">Week-by-week games (18 weeks)</p>
 
 <div class="schedule-controls">
@@ -476,11 +492,12 @@
   <table class="schedule-table">
     <thead>
       <tr>
-        <th>Week</th>
-        <th>Date / Time</th>
-        <th>Matchup</th>
-        <th>Home/Away</th>
-      </tr>
+  <th>Week</th>
+  <th>Date / Time</th>
+  <th>Matchup</th>
+  <th>Home/Away</th>
+  <th>Result</th>
+</tr>
     </thead>
     <tbody id="scheduleBody"></tbody>
   </table>
@@ -489,209 +506,7 @@
 </section>
 
 
-
-    <script>
-      // ==========================
-      //   CONFIG
-      // ==========================
-      const EVENT_TITLE = "COUNTDOWN 4 NEW SEASON!";
-    const EVENT_TIME_ISO = "2026-09-10T16:00:00-08:00";
-
-
-      // Optional title/when text (only runs if elements exist)
-      const titleEl = document.getElementById("event-title");
-      const whenEl = document.getElementById("event-when");
-
-      if (titleEl) {
-        titleEl.textContent = EVENT_TITLE;
-      }
-
-      if (whenEl) {
-        const eventDate = new Date(EVENT_TIME_ISO);
-        whenEl.textContent = eventDate.toLocaleString("en-US", {
-          weekday: "short",
-          month: "short",
-          day: "numeric",
-          hour: "numeric",
-          minute: "2-digit",
-          timeZoneName: "short",
-        });
-      }
-
-      // ==========================
-      //   COUNTDOWN TIMER
-      // ==========================
-      const daysEl = document.getElementById("days");
-      const hoursEl = document.getElementById("hours");
-      const minutesEl = document.getElementById("minutes");
-      const secondsEl = document.getElementById("seconds");
-
-      function updateCountdown() {
-        if (!daysEl || !hoursEl || !minutesEl || !secondsEl) return;
-
-        const now = new Date().getTime();
-        const eventTime = new Date(EVENT_TIME_ISO).getTime();
-        let diff = eventTime - now;
-
-        if (diff <= 0) {
-          daysEl.textContent = "0";
-          hoursEl.textContent = "0";
-          minutesEl.textContent = "0";
-          secondsEl.textContent = "0";
-          clearInterval(countdownInterval);
-          return;
-        }
-
-        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-        const hours = Math.floor(
-          (diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
-        );
-        const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-        const seconds = Math.floor((diff % (1000 * 60)) / 1000);
-
-        daysEl.textContent = days;
-        hoursEl.textContent = hours;
-        minutesEl.textContent = minutes;
-        secondsEl.textContent = seconds;
-      }
-
-      const countdownInterval = setInterval(updateCountdown, 1000);
-      updateCountdown();
-
-      // ==========================
-      //   COPY SHAREABLE LINK
-      // ==========================
-      const copyBtn = document.getElementById("copy-link");
-      const statusEl = document.getElementById("status");
-
-      if (copyBtn && statusEl) {
-        copyBtn.addEventListener("click", async () => {
-          try {
-            await navigator.clipboard.writeText(window.location.href);
-            statusEl.textContent = "Link copied!";
-          } catch (err) {
-            statusEl.textContent = "Could not copy link.";
-          }
-
-          setTimeout(() => {
-            statusEl.textContent = "";
-          }, 2000);
-        });
-      }
-
-      // ==========================
-      //   ITINERARY TOGGLE
-      // ==========================
-      // button id="itinerary-btn"
-      // section id="itinerary" class="card hidden"
-      const itineraryBtn = document.getElementById("itinerary-btn");
-      const itinerarySection = document.getElementById("itinerary");
-      const scheduleBtn = document.getElementById("schedule-btn");
-const scheduleSection = document.getElementById("schedule");
-const scheduleBody = document.getElementById("scheduleBody");
-const weekSelect = document.getElementById("weekSelect");
-
-// ============================
-// SCHEDULE DATA (edit later)
-// ============================
-const cowboysSchedule = [
-  { week: 1,  dateTime: "Thu 09/04",           matchup: "Cowboys @ Eagles",      homeAway: "Away" },
-  { week: 2,  dateTime: "Sun 09/14",           matchup: "Giants @ Cowboys",      homeAway: "Home" },
-  { week: 3,  dateTime: "Sun 09/21",           matchup: "Cowboys @ Bears",       homeAway: "Away" },
-  { week: 4,  dateTime: "Sun 09/28",           matchup: "Packers @ Cowboys",     homeAway: "Home" },
-  { week: 5,  dateTime: "Sun 10/05",           matchup: "Cowboys @ Jets",        homeAway: "Away" },
-  { week: 6,  dateTime: "Sun 10/12",           matchup: "Cowboys @ Panthers",    homeAway: "Away" },
-  { week: 7,  dateTime: "Sun 10/19",           matchup: "Commanders @ Cowboys",  homeAway: "Home" },
-  { week: 8,  dateTime: "Sun 10/26",           matchup: "Cowboys @ Broncos",     homeAway: "Away" },
-  { week: 9,  dateTime: "Mon 11/03",           matchup: "Cardinals @ Cowboys",   homeAway: "Home" },
-  { week: 10, dateTime: "BYE",                 matchup: "BYE WEEK",              homeAway: "—"    },
-  { week: 11, dateTime: "Mon 11/17",           matchup: "Cowboys @ Raiders",     homeAway: "Away" },
-  { week: 12, dateTime: "Sun 11/23",           matchup: "Eagles @ Cowboys",      homeAway: "Home" },
-  { week: 13, dateTime: "Thu 11/27",           matchup: "Chiefs @ Cowboys",      homeAway: "Home" },
-  { week: 14, dateTime: "Thu 12/04",           matchup: "Cowboys @ Lions",       homeAway: "Away" },
-  { week: 15, dateTime: "Sun 12/14",           matchup: "Vikings @ Cowboys",     homeAway: "Home" },
-  { week: 16, dateTime: "Sun 12/21",           matchup: "Chargers @ Cowboys",    homeAway: "Home" },
-  { week: 17, dateTime: "Thu 12/25",           matchup: "Cowboys @ Commanders",  homeAway: "Away" },
-  { week: 18, dateTime: "Sun 01/04 12:00 PM",  matchup: "Cowboys @ Giants",      homeAway: "Away" },
-];
-
-
-// ============================
-// RENDER SCHEDULE TABLE + DROPDOWN
-// ============================
-function renderSchedule() {
-  if (!scheduleBody || !weekSelect) return;
-
-  // Clear existing
-  scheduleBody.innerHTML = "";
-  weekSelect.innerHTML = `<option value="">Select a week</option>`;
-
-  cowboysSchedule.forEach((game) => {
-    // Dropdown option
-    const opt = document.createElement("option");
-    opt.value = String(game.week);
-    opt.textContent = `Week ${game.week}`;
-    weekSelect.appendChild(opt);
-
-    // Table row
-    const tr = document.createElement("tr");
-    tr.id = `week-${game.week}`;
-
-    tr.innerHTML = `
-      <td>Week ${game.week}</td>
-      <td>${game.dateTime}</td>
-      <td>${game.matchup}</td>
-      <td>${game.homeAway}</td>
-    `;
-
-    scheduleBody.appendChild(tr);
-  });
-
-  // Jump to week behavior
-  weekSelect.addEventListener("change", () => {
-    const week = weekSelect.value;
-    if (!week) return;
-
-    const row = document.getElementById(`week-${week}`);
-    if (row) row.scrollIntoView({ behavior: "smooth", block: "start" });
-  });
-}
-
-// Call once on page load
-renderSchedule();
-
-
-
-      if (itineraryBtn && itinerarySection) {
-        itineraryBtn.addEventListener("click", (event) => {
-          event.preventDefault();
-          itinerarySection.classList.toggle("hidden");
-
-          if (!itinerarySection.classList.contains("hidden")) {
-            itinerarySection.scrollIntoView({
-              behavior: "smooth",
-              block: "start",
-            });
-          }
-        });
-      }
-
-      if (scheduleBtn && scheduleSection) {
-        scheduleBtn.addEventListener("click", (event) => {
-          event.preventDefault();
-          scheduleSection.classList.toggle("hidden");
-
-          if (!scheduleSection.classList.contains("hidden")) {
-            scheduleSection.scrollIntoView({
-              behavior: "smooth",
-              block: "start",
-            });
-          }
-        });
-      }
-    </script>
-
-</script>
+<script src="js/app.js"></script>
 
 <footer class="page-footer">
   <p>© 2025-2026 Gabriel Valencia · COWBOYS COUNTDOWN™</p>

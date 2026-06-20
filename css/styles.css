@@ -1,0 +1,92 @@
+.season-info {
+  display: flex !important;
+  justify-content: center;
+  gap: 24px;
+  margin-top: 32px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+}
+
+.info-card {
+  background: rgba(5, 12, 35, 0.85);
+  border: 1px solid rgba(130, 160, 255, 0.25);
+  border-radius: 18px;
+  padding: 20px 30px;
+  min-width: 260px;
+  text-align: center;
+  box-shadow: 0 0 18px rgba(80, 130, 255, 0.25);
+}
+
+.info-card h3 {
+  color: #8fb2ff;
+  letter-spacing: 3px;
+  margin-bottom: 10px;
+}
+
+.info-card p {
+  color: white;
+  margin: 8px 0;
+  font-size: 1.2rem;
+}
+.current-week {
+  background: rgba(37, 99, 235, 0.35);
+}
+
+.current-week td {
+  color: white;
+  font-weight: bold;
+}
+.selected-result {
+  transform: scale(1.08);
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.6);
+}
+
+.win-btn {
+  background: #16a34a;
+  color: white;
+}
+
+.loss-btn {
+  background: #dc2626;
+  color: white;
+}
+
+.result-btn {
+  border: none;
+  border-radius: 8px;
+  padding: 6px 10px;
+  margin: 2px;
+  cursor: pointer;
+  font-weight: bold;
+}
+.result-btn {
+  min-width: 38px;
+}
+
+.selected-result {
+  display: inline-block;
+}
+.result-btn {
+  min-width: 42px;
+  height: 34px;
+}
+
+.selected-result {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+#reset-record-btn {
+  margin-top: 15px;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 8px;
+  background: #dc2626;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+#reset-record-btn:hover {
+  background: #b91c1c;
+}
