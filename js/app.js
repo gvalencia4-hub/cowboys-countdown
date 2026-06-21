@@ -467,3 +467,22 @@ document.addEventListener("click", function (event) {
   renderSchedule();
   updateAppState();
 });
+// ==========================
+// HAMBURGER MENU
+// ==========================
+
+const menuToggle = document.getElementById("menu-toggle");
+const mobileMenu = document.getElementById("mobile-menu");
+
+if (menuToggle && mobileMenu) {
+  menuToggle.addEventListener("click", () => {
+    mobileMenu.classList.toggle("active");
+  });
+}
+const menuLinks = document.querySelectorAll(".mobile-menu a");
+
+menuLinks.forEach((link) => {
+  link.addEventListener("click", () => {
+    mobileMenu.classList.remove("active");
+  });
+});
