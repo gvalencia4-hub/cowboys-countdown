@@ -486,3 +486,31 @@ menuLinks.forEach((link) => {
     mobileMenu.classList.remove("active");
   });
 });
+const menuScheduleLink = document.querySelector('a[href="#schedule"]');
+const menuItineraryLink = document.querySelector('a[href="#itinerary"]');
+
+if (menuScheduleLink && scheduleSection) {
+  menuScheduleLink.addEventListener("click", () => {
+    scheduleSection.classList.remove("hidden");
+
+    setTimeout(() => {
+      scheduleSection.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+    }, 100);
+  });
+}
+
+if (menuItineraryLink && itinerarySection) {
+  menuItineraryLink.addEventListener("click", () => {
+    itinerarySection.classList.remove("hidden");
+
+    setTimeout(() => {
+      itinerarySection.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+    }, 100);
+  });
+}
